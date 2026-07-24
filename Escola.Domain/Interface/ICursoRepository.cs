@@ -1,0 +1,13 @@
+﻿using Escola.Domain.Entities;
+
+namespace Escola.Domain.Interface;
+
+public interface ICursoRepository
+{
+    Task<Curso> GetByIdAsync(int id);
+    Task<List<Curso>> GetAllAsync();
+    Task<Curso> AddAsync(Curso curso);
+    Task<Curso> UpdateAsync(Curso curso);
+    Task<bool> DeleteAsync(int id);
+
+}
