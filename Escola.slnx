@@ -2,6 +2,6 @@
   <Project Path="Escola.API/Escola.API.csproj" />
   <Project Path="Escola.Application/Escola.Application.csproj" />
   <Project Path="Escola.Domain/Escola.Domain.csproj" />
-  <Project Path="EScola.InfraData/EScola.InfraData.csproj" />
+  <Project Path="EScola.InfraData/Escola.InfraData.csproj" />
   <Project Path="Escola.InfraIoc/Escola.InfraIoc.csproj" />
 </Solution>
