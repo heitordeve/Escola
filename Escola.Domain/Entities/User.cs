@@ -6,11 +6,11 @@ namespace Escola.Domain.Entities;
 
 public class User
 {
-    public int Id { get; set; }
+    public int UserId { get; set; }
     public string Name { get; set; }
     public string Email { get; set; }
     public byte[] PasswordHash { get; set; }
     public byte[] PasswordSalt { get; set; }
     public string Perfil { get; set; }
-    public ICollection<Matricula> Matriculas { get; set; }
+    public ICollection<Matricula> Matricula { get; set; }
 }

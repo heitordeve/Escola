@@ -10,7 +10,7 @@ Estrutura do repositório
 - `Escola.Application` — regras de aplicação / casos de uso
 - `Escola.Domain` — entidades e interfaces do domínio
 - `Escola.InfraIoc` — composição de dependências / configuração de DI
-- `EScola.InfraData` — implementação de persistência (Entity Framework)
+- `Escola.Infra.Data` — implementação de persistência (Entity Framework)
 
 Tecnologias
 -----------

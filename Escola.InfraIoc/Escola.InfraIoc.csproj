@@ -9,7 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Escola.Application\Escola.Application.csproj" />
     <ProjectReference Include="..\Escola.Domain\Escola.Domain.csproj" />
-    <ProjectReference Include="..\EScola.InfraData\Escola.InfraData.csproj" />
+    <ProjectReference Include="..\Escola.Infra.Data\Escola.Infra.Data.csproj" />
   </ItemGroup>
 
 </Project>
