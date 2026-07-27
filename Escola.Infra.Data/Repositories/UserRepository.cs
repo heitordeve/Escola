@@ -19,16 +19,16 @@ public class UserRepository : IUserRepository
         await _context.SaveChangesAsync();
         return user;
     }
-    public async Task<bool> DeleteAsync(int id)
+    public async Task<User> DeleteAsync(int id)
     {
         var user = await _context.User.Where(u => u.UserId == id && u.IsDeleted == false).FirstOrDefaultAsync();
         if (user == null)
-            return false;
+            return null;
 
         user.IsDeleted = true;
         _context.User.Update(user);
         await _context.SaveChangesAsync();
-        return true;
+        return user;
     }
     public async Task<List<User>> GetAllAsync()
     {
