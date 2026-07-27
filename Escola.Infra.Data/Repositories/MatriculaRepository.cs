@@ -1,32 +1,46 @@
 ﻿using Escola.Domain.Entities;
 using Escola.Domain.Interface;
-
+using Escola.Infra.Data.Context;
+using Microsoft.EntityFrameworkCore;
 namespace Escola.Infra.Data.Repositories;
 
 public class MatriculaRepository : IMatriculaRepository
 {
-    Task<Matricula> IMatriculaRepository.AddAsync(Matricula matricula)
+    private readonly ApplicationDbContext _context;
+
+    public async Task<Matricula> AddAsync(Matricula matricula)
     {
-        throw new NotImplementedException();
+        _context.Matricula.Add(matricula);
+        await _context.SaveChangesAsync();
+        return matricula;
+    }
+    public async Task<bool> DeleteAsync(int id)
+    {
+        var matricula = await _context.Matricula.Where(m => m.Id == id && m.IsDeleted == false).FirstOrDefaultAsync();
+        if (matricula == null)
+            return false;
+
+        matricula.IsDeleted = true;
+        _context.Matricula.Update(matricula);
+        await _context.SaveChangesAsync();
+        return true;
+    }
+    public async Task<List<Matricula>> GetAllAsync()
+    {
+        return await _context.Matricula
+            .Where(m => !m.IsDeleted)
+            .ToListAsync();
+    }
+    public async Task<Matricula> GetByIdAsync(int id)
+    {
+        return await _context.Matricula.Where(m => m.Id == id && m.IsDeleted == false).FirstOrDefaultAsync();
     }
 
-    Task<bool> IMatriculaRepository.DeleteAsync(int id)
-    {
-        throw new NotImplementedException();
-    }
 
-    Task<List<Matricula>> IMatriculaRepository.GetAllAsync()
+    public async Task<Matricula> UpdateAsync(Matricula matricula)
     {
-        throw new NotImplementedException();
-    }
-
-    Task<Matricula> IMatriculaRepository.GetByIdAsync(int id)
-    {
-        throw new NotImplementedException();
-    }
-
-    Task<Matricula> IMatriculaRepository.UpdateAsync(Matricula matricula)
-    {
-        throw new NotImplementedException();
+        _context.Matricula.Update(matricula);
+        await _context.SaveChangesAsync();
+        return matricula;
     }
 }

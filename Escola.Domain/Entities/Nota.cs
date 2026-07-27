@@ -12,5 +12,8 @@ public class Nota
     public DateTime DataRegistro { get; set; }
     public bool Aprovado { get; set; }
     public Matricula Matricula { get; set; }
+   
+    public DateTime DataNota { get; set; }
+    public bool IsDeleted { get; set; }
 
 }

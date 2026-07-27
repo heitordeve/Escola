@@ -1,32 +1,51 @@
 ﻿using Escola.Domain.Entities;
 using Escola.Domain.Interface;
-
+using Escola.Infra.Data.Context;
+using Microsoft.EntityFrameworkCore;
 namespace Escola.Infra.Data.Repositories;
 
 public class UserRepository : IUserRepository
 {
-    Task<User> IUserRepository.AddAsync(User user)
+    private readonly ApplicationDbContext _context;
+
+    public UserRepository(ApplicationDbContext context)
     {
-        throw new NotImplementedException();
+        _context = context;
     }
 
-    Task<bool> IUserRepository.DeleteAsync(int id)
+    public async Task<User> AddAsync(User user)
     {
-        throw new NotImplementedException();
+        _context.User.Add(user);
+        await _context.SaveChangesAsync();
+        return user;
+    }
+    public async Task<bool> DeleteAsync(int id)
+    {
+        var user = await _context.User.Where(u => u.UserId == id && u.IsDeleted == false).FirstOrDefaultAsync();
+        if (user == null)
+            return false;
+
+        user.IsDeleted = true;
+        _context.User.Update(user);
+        await _context.SaveChangesAsync();
+        return true;
+    }
+    public async Task<List<User>> GetAllAsync()
+    {
+        return await _context.User
+            .Where(u => !u.IsDeleted)
+            .ToListAsync();
+    }
+    public async Task<User> GetByIdAsync(int id)
+    {
+        return await _context.User.Where(u => u.UserId == id && u.IsDeleted == false).FirstOrDefaultAsync();
     }
 
-    Task<List<User>> IUserRepository.GetAllAsync()
-    {
-        throw new NotImplementedException();
-    }
 
-    Task<User> IUserRepository.GetByIdAsync(int id)
+    public async Task<User> UpdateAsync(User user)
     {
-        throw new NotImplementedException();
-    }
-
-    Task<User> IUserRepository.UpdateAsync(User user)
-    {
-        throw new NotImplementedException();
+        _context.User.Update(user);
+        await _context.SaveChangesAsync();
+        return user;
     }
 }

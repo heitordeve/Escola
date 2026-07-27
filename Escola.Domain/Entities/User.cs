@@ -13,4 +13,5 @@ public class User
     public byte[] PasswordSalt { get; set; }
     public string Perfil { get; set; }
     public ICollection<Matricula> Matricula { get; set; }
+    public bool IsDeleted { get; set; }
 }

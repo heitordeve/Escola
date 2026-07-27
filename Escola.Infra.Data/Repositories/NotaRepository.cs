@@ -1,32 +1,52 @@
 ﻿using Escola.Domain.Entities;
 using Escola.Domain.Interface;
-
+using Escola.Infra.Data.Context;
+using Microsoft.EntityFrameworkCore;
 namespace Escola.Infra.Data.Repositories;
 
 public class NotaRepository : INotaRepository
 {
-    Task<Nota> INotaRepository.AddAsync(Nota nota)
+    private readonly ApplicationDbContext _context;
+
+    public NotaRepository(ApplicationDbContext context)
     {
-        throw new NotImplementedException();
+        _context = context;
     }
 
-    Task<bool> INotaRepository.DeleteAsync(int id)
+    public async Task<Nota> AddAsync(Nota nota)
     {
-        throw new NotImplementedException();
+        _context.Nota.Add(nota);
+        await _context.SaveChangesAsync();
+        return nota;
+    }
+    public async Task<bool> DeleteAsync(int id)
+    {
+        var nota = await _context.Nota.Where(n => n.Id == id && !n.IsDeleted)
+            .FirstOrDefaultAsync();
+        if (nota == null)
+            return false;
+
+        nota.IsDeleted = true;
+        _context.Nota.Update(nota);
+        await _context.SaveChangesAsync();
+        return true;
+    }
+    public async Task<List<Nota>> GetAllAsync()
+    {
+        return await _context.Nota
+            .Where(n => !n.IsDeleted)
+            .ToListAsync();
+    }
+    public async Task<Nota> GetByIdAsync(int id)
+    {
+        return await _context.Nota.Where(n => n.Id == id && n.IsDeleted == false).FirstOrDefaultAsync();
     }
 
-    Task<List<Nota>> INotaRepository.GetAllAsync()
-    {
-        throw new NotImplementedException();
-    }
 
-    Task<Nota> INotaRepository.GetByIdAsync(int id)
+    public async Task<Nota> UpdateAsync(Nota nota)
     {
-        throw new NotImplementedException();
-    }
-
-    Task<Nota> INotaRepository.UpdateAsync(Nota nota)
-    {
-        throw new NotImplementedException();
+        _context.Nota.Update(nota);
+        await _context.SaveChangesAsync();
+        return nota;
     }
 }
