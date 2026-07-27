@@ -14,16 +14,16 @@ public class MatriculaRepository : IMatriculaRepository
         await _context.SaveChangesAsync();
         return matricula;
     }
-    public async Task<bool> DeleteAsync(int id)
+    public async Task<Matricula> DeleteAsync(int id)
     {
         var matricula = await _context.Matricula.Where(m => m.Id == id && m.IsDeleted == false).FirstOrDefaultAsync();
         if (matricula == null)
-            return false;
+            return null;
 
         matricula.IsDeleted = true;
         _context.Matricula.Update(matricula);
         await _context.SaveChangesAsync();
-        return true;
+        return matricula;
     }
     public async Task<List<Matricula>> GetAllAsync()
     {

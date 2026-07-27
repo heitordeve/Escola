@@ -8,5 +8,5 @@ public interface IMatriculaRepository
     Task<List<Matricula>> GetAllAsync();
     Task<Matricula> AddAsync(Matricula matricula);
     Task<Matricula> UpdateAsync(Matricula matricula);
-    Task<bool> DeleteAsync(int id);
+    Task<Matricula> DeleteAsync(int id);
 }
