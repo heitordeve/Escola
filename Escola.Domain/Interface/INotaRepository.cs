@@ -8,5 +8,5 @@ public interface INotaRepository
     Task<List<Nota>> GetAllAsync();
     Task<Nota> AddAsync(Nota nota);
     Task<Nota> UpdateAsync(Nota nota);
-    Task<bool> DeleteAsync(int id);
+    Task<Nota> DeleteAsync(int id);
 }

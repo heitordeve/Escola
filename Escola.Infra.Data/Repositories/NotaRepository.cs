@@ -19,17 +19,17 @@ public class NotaRepository : INotaRepository
         await _context.SaveChangesAsync();
         return nota;
     }
-    public async Task<bool> DeleteAsync(int id)
+    public async Task<Nota> DeleteAsync(int id)
     {
         var nota = await _context.Nota.Where(n => n.Id == id && !n.IsDeleted)
             .FirstOrDefaultAsync();
         if (nota == null)
-            return false;
+            return null;
 
         nota.IsDeleted = true;
         _context.Nota.Update(nota);
         await _context.SaveChangesAsync();
-        return true;
+        return nota;
     }
     public async Task<List<Nota>> GetAllAsync()
     {
