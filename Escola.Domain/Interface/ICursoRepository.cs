@@ -8,6 +8,6 @@ public interface ICursoRepository
     Task<List<Curso>> GetAllAsync();
     Task<Curso> AddAsync(Curso curso);
     Task<Curso> UpdateAsync(Curso curso);
-    Task<bool> DeleteAsync(int id);
+    Task<Curso> DeleteAsync(int id);
 
 }

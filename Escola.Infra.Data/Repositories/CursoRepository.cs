@@ -20,16 +20,16 @@ public class CursoRepository : ICursoRepository
         await _context.SaveChangesAsync();
         return curso;
     }
-    public async Task<bool> DeleteAsync(int id)
+    public async Task<Curso> DeleteAsync(int id)
     {
         var curso = await _context.Curso.Where(c => c.Id == id && c.IsDeleted == false).FirstOrDefaultAsync();
         if (curso == null)
-            return false;
+            return null;
 
         curso.IsDeleted = true;
         _context.Curso.Update(curso);
         await _context.SaveChangesAsync();
-        return true;
+        return curso;
     }
     public async Task<List<Curso>> GetAllAsync()
     {
