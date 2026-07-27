@@ -1,4 +1,6 @@
-﻿using Escola.Domain.Interface;
+﻿using Escola.Application.Interdaces;
+using Escola.Application.Services;
+using Escola.Domain.Interface;
 using Escola.Infra.Data.Context;
 using Escola.Infra.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +25,11 @@ public static class DepencyInjection
         services.AddScoped<INotaRepository, NotaRepository>();
         services.AddScoped<ITurmaRepository, TurmaRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
+
+        services.AddScoped<ICursoService, CursoService>();
+        services.AddScoped<IMatriculaService, MatriculaService>();
+        services.AddScoped<INotaService, NotaService>();
+        services.AddScoped<ITurmaService, TurmaService>();
 
         return services;
     }

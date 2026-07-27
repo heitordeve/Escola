@@ -1,9 +1,11 @@
-﻿using Escola.Application.DTOS.Nota;
+﻿using Escola.Application.DTOS.Curso;
+using Escola.Application.DTOS.Nota;
 using Escola.Application.DTOS.Turma;
 using Escola.Application.Interdaces;
 using Escola.Domain.Entities;
 using Escola.Domain.Interface;
 using Microsoft.VisualBasic;
+using System.ComponentModel;
 
 namespace Escola.Application.Services;
 
@@ -55,13 +57,20 @@ public class TurmaService : ITurmaService
     public async Task<List<TurmaGetDTO>> GetAllAsync()
     {
         var turmas = await _turmaRepository.GetAllAsync();
-        return turmas.Select(t => new TurmaGetDTO
+        var turmaGetDeialDTO = new List<TurmaGetDTO>();
+        turmaGetDeialDTO.AddRange(turmas.Select(turma => new TurmaGetDTO
         {
-            Id = t.Id,
-            Name = t.Name,
-            Description = t.Description,
-            CursoId = t.CursoId
-        }).ToList();
+            Id = turma.Id,
+            Name = turma.Name,
+            Description = turma.Description,        
+            Curso = new CursoGetDTO
+            {
+                Id = turma.CursoId,
+                Name = turma.Curso.Name,
+                Description = turma.Curso.Description,
+            }
+        }));
+        return turmaGetDeialDTO;
     }
 
     public async Task<TurmaGetDTO> GetByIdAsync(int id)
