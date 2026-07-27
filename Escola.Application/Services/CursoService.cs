@@ -1,11 +1,12 @@
-﻿using Escola.Application.DTOS.Curso;
+﻿using System.Linq;
+using Escola.Application.DTOS.Curso;
 using Escola.Application.Interdaces;
 using Escola.Domain.Entities;
 using Escola.Domain.Interface;
 
 namespace Escola.Application.Services;
 
-internal class CursoService : ICursoService
+public class CursoService : ICursoService
 {
     private readonly ICursoRepository _cursoRepository;
 
@@ -14,12 +15,12 @@ internal class CursoService : ICursoService
         _cursoRepository = cursoRepository;
     }
 
-    public async Task<CursoGetDTO> AddAsync(CursoGetDTO cursoGetDTO)
+    public async Task<CursoGetDTO> AddAsync(CursoPostDTO cursoPostDTO)
     {
         var curso = new Curso
         {
-            Name = cursoGetDTO.Name,
-            Description = cursoGetDTO.Description
+            Name = cursoPostDTO.Name,
+            Description = cursoPostDTO.Description
         };
         var result = await _cursoRepository.AddAsync(curso);
         return new CursoGetDTO
@@ -45,15 +46,15 @@ internal class CursoService : ICursoService
         };
     }
 
-    public async Task<List<CursoGetDTO>>GetAllAsync()
+    public async Task<List<CursoGetDTO>> GetAllAsync()
     {
         var cursos = await _cursoRepository.GetAllAsync();
-       var cursoGetDTOs = cursos.Select(curso => new CursoGetDTO
-       {
-           Id = curso.Id,
-           Name = curso.Name,
-           Description = curso.Description
-       }).ToList();
+        var cursoGetDTOs = cursos.Select(curso => new CursoGetDTO
+        {
+            Id = curso.Id,
+            Name = curso.Name,
+            Description = curso.Description
+        }).ToList();
         return cursoGetDTOs;
     }
 
@@ -72,9 +73,7 @@ internal class CursoService : ICursoService
         };
     }
 
-    
-
-    public async Task<CursoGetDTO> UpdateAsync(CursoGetDTO cursoPutDTO)
+    public async Task<CursoGetDTO> UpdateAsync(CursoPutDTO cursoPutDTO)
     {
         var curso = new Curso
         {

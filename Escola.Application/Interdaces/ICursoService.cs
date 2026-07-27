@@ -7,7 +7,7 @@ public interface ICursoService
 {
     Task<CursoGetDTO> GetByIdAsync(int id);
     Task<List<CursoGetDTO>> GetAllAsync();
-    Task<CursoGetDTO> AddAsync(CursoGetDTO cursoGetDTO);
-    Task<CursoGetDTO> UpdateAsync(CursoGetDTO cursoGetDTO);
+    Task<CursoGetDTO> AddAsync(CursoPostDTO cursoPostDTO);
+    Task<CursoGetDTO> UpdateAsync(CursoPutDTO cursoPutDTO);
     Task<CursoGetDTO> DeleteAsync(int id);
 }
