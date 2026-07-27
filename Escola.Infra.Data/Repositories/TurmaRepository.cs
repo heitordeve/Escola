@@ -19,16 +19,16 @@ public class TurmaRepository : ITurmaRepository
         await _context.SaveChangesAsync();
         return turma;
     }
-    public async Task<bool> DeleteAsync(int id) 
+    public async Task<Turma> DeleteAsync(int id) 
     {
         var turma = await _context.Turma.Where(t => t.Id == id && t.IsDeleted == false).FirstOrDefaultAsync();
         if (turma == null)
-            return false;
+            return null;
 
         turma.IsDeleted = true;
         _context.Turma.Update(turma);
         await _context.SaveChangesAsync();
-        return true;
+        return turma;
     }
     public async Task<List<Turma>> GetAllAsync()
     {
